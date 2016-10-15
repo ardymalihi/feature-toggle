@@ -56,12 +56,6 @@ namespace FeatureToggle.Web
                 RequestPath = "/node_modules"
             });
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "bower_components")),
-                RequestPath = "/bower_components"
-            });
-
             app.UseMvc(routes =>
             {
                 routes.MapSpaFallbackRoute("spa-fallback", new { controller = "home", action = "index" });

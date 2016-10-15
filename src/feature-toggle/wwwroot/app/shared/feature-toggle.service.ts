@@ -8,8 +8,14 @@ export class FeatureToggleService {
     
     constructor(private http: Http) { }
 
-    getFeatureToggles() {
+    getAllFeatureToggles() {
         return this.http.get('api/featuretoggles')
             .map(response => <IFeatureToggle[]>response.json());
     }
+
+    getMyFeatureToggles() {
+        return this.http.get('api/featuretoggles/host')
+            .map(response => <IFeatureToggle[]>response.json());
+    }
+
 }

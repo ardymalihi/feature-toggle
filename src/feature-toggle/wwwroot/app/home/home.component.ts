@@ -16,11 +16,11 @@ export class HomeComponent implements OnInit {
     constructor(private featureToggleService: FeatureToggleService) { }
 
     ngOnInit() {
-        this.featureToggleService.getFeatureToggles()
-            .subscribe(featureToggles => {
-                this.myFeatureToggles = featureToggles.filter(featureToggle => featureToggle.host || "" !== "");
-                this.allFeatureToggles = featureToggles.filter(featureToggle => featureToggle.host == "");
-            });
+        this.featureToggleService.getAllFeatureToggles()
+            .subscribe(featureToggles => this.allFeatureToggles = featureToggles);
+
+        this.featureToggleService.getMyFeatureToggles()
+            .subscribe(featureToggles => this.myFeatureToggles = featureToggles);
     }
 
     searchChanged(value) {

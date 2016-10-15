@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FeatureToggle.Web.ViewModels
+namespace FeatureToggle.Web.Models
 {
-    public class FeatureToggleVm
+    public class FeatureToggleModel
     {
         public int Id { get; set; }
 
@@ -16,6 +16,5 @@ namespace FeatureToggle.Web.ViewModels
         public bool Enabled { get; set; }
 
         public string Host { get; set; }
-
     }
 }

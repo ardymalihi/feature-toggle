@@ -2,6 +2,7 @@
 
 import { FeatureToggleService } from '../shared/feature-toggle.service';
 import { IFeatureToggle } from '../shared/feature-toggle.interface'
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     moduleId: module.id,
@@ -13,7 +14,17 @@ export class FeatureTogglesComponent {
     @Input() title: string;
     @Input() searchedFeatureToggle: string;
 
+    constructor(public toastr: ToastsManager) {
+    }
+
     onChange(featureToggle: IFeatureToggle) {
-        console.log(featureToggle);
+        featureToggle.enabled = !featureToggle.enabled;
+        if (featureToggle.enabled) {
+            this.toastr.success(featureToggle.name + ' Activated');
+        }
+        else {
+            this.toastr.info(featureToggle.name + ' Deactivated');
+        }
+        
     }
 }

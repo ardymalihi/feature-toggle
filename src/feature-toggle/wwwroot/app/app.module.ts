@@ -13,6 +13,7 @@ import { SearchComponent } from './home/search.component';
 import { SearchPipe } from './shared/feature-toggle.pipe';
 
 import { UiSwitchModule } from 'angular2-ui-switch'
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { UiSwitchModule } from 'angular2-ui-switch'
         FormsModule,
         HttpModule,
         routing,
-        UiSwitchModule
+        UiSwitchModule,
+        ToastModule
     ],
     providers: [
         appRoutingProviders,

@@ -1,0 +1,19 @@
+﻿<div *ngIf="featureToggles && featureToggles.length > 0">
+    <h1 title="">
+        {{title}}
+    </h1>
+    <div class="well" title="">
+        <div class="row">
+            <div class="col-md-6" *ngIf="(featureToggles | search:searchedFeatureToggle:true).length === 0">
+                <h4>No matches</h4>
+            </div>
+            <div class="col-md-6" *ngFor="let featureToggle of (featureToggles | search:searchedFeatureToggle:true)">
+                <h4>
+                    <button class="glyphicon glyphicon-remove btn btn-sm btn-danger"></button>
+                    <span [title]="featureToggle.description">{{featureToggle.name}}</span>
+                </h4>
+                <ui-switch size="large" (change)="onChange(featureToggle)" [(ngModel)]="featureToggle.enabled"></ui-switch>
+            </div>
+        </div>
+    </div>
+</div>

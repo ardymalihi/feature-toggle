@@ -1,4 +1,5 @@
 ﻿import { Component, Output, EventEmitter } from '@angular/core';
+import { EmitterService } from '../shared/emitter.service';
 
 @Component({
     moduleId: module.id,
@@ -6,10 +7,12 @@
     templateUrl: './search.component.html'
 })
 export class SearchComponent {
-    @Output() searchChanged = new EventEmitter();
+
+    constructor(private emitterService: EmitterService) { }
+
     inputSearch: string;
 
     keyup() {
-        this.searchChanged.emit(this.inputSearch);
+        this.emitterService.get("searchChanged").emit(this.inputSearch);
     }
 }

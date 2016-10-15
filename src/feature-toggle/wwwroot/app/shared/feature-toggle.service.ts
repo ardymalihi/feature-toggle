@@ -18,4 +18,14 @@ export class FeatureToggleService {
             .map(response => <boolean>response.json());
     }
 
+    addFeatureToggle(featureToggle: IFeatureToggle) {
+        return this.http.post('api/featuretoggles', featureToggle)
+            .map(response => <boolean>response.json());
+    }
+
+    flipFeatureToggle(featureToggle: IFeatureToggle) {
+        return this.http.put('api/featuretoggles', featureToggle)
+            .map(response => <boolean>response.json());
+    }
+
 }

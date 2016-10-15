@@ -9,7 +9,8 @@ namespace FeatureToggle.Web.Data
     public interface IFeatureToggleData
     {
         List<FeatureToggleModel> GetFeatureToggles(string host);
-
         bool DeleteFeatureToggles(int id, string host);
+        bool AddFeatureToggles(FeatureToggleModel model);
+        bool FlipFeatureToggles(FeatureToggleModel model);
     }
 }

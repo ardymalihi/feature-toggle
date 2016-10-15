@@ -83,5 +83,15 @@ namespace FeatureToggle.Web.Data
 
             return true;
         }
+
+        public bool AddFeatureToggles(FeatureToggleModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool FlipFeatureToggles(FeatureToggleModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

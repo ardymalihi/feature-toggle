@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { routing, appRoutingProviders } from './app.routing';
 import { FeatureToggleService } from './shared/feature-toggle.service';
+import { EmitterService } from './shared/emitter.service';
 import { FeatureTogglesComponent } from './home/feature-toggles.component';
 import { SearchComponent } from './home/search.component';
 import { SearchPipe } from './shared/feature-toggle.pipe';
@@ -26,7 +27,8 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     ],
     providers: [
         appRoutingProviders,
-        FeatureToggleService
+        FeatureToggleService,
+        EmitterService
     ],
     declarations: [
         AppComponent,

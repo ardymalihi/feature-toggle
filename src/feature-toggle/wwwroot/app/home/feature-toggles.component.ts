@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit, Input, Pipe } from '@angular/core';
 
 import { FeatureToggleService } from '../shared/feature-toggle.service';
+import { EmitterService } from '../shared/emitter.service';
 import { IFeatureToggle } from '../shared/feature-toggle.interface'
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
@@ -15,10 +16,17 @@ export class FeatureTogglesComponent implements OnInit {
     @Input() searchedFeatureToggle: string;
     featureToggles: IFeatureToggle[];
 
-    constructor(private featureToggleService: FeatureToggleService, public toastr: ToastsManager) {
+    constructor(
+        private emitterService: EmitterService,
+        private featureToggleService: FeatureToggleService,
+        private toastr: ToastsManager) {
     }
 
     ngOnInit() {
+
+        this.emitterService.get("searchChanged").subscribe(value => {
+            this.searchedFeatureToggle = value;
+        });
 
         this.featureToggleService.getFeatureToggles(this.host)
             .subscribe(featureToggles => this.featureToggles = featureToggles);
@@ -26,14 +34,17 @@ export class FeatureTogglesComponent implements OnInit {
 
 
     onChange(featureToggle: IFeatureToggle) {
-        featureToggle.enabled = !featureToggle.enabled;
-        if (featureToggle.enabled) {
-            this.toastr.success(featureToggle.name + ' is ON');
-        }
-        else {
-            this.toastr.info(featureToggle.name + ' is OFF');
-        }
-        
+        this.featureToggleService
+            .flipFeatureToggle(featureToggle)
+            .subscribe(updated => {
+                if (featureToggle.enabled) {
+                    this.toastr.success(featureToggle.name + ' is ON');
+                }
+                else {
+                    this.toastr.info(featureToggle.name + ' is OFF');
+                }
+            }
+            );
     }
 
 
@@ -42,7 +53,8 @@ export class FeatureTogglesComponent implements OnInit {
         this.featureToggleService
             .deleteFeatureToggle(featureToggle)
             .subscribe(removed => {
-                alert(removed);
+                this.featureToggles = this.featureToggles.filter(f => f.id !== featureToggle.id);
+                this.toastr.success(featureToggle.name + ' successfully removed');
             }
         );
     }

@@ -28,5 +28,17 @@ namespace FeatureToggle.Web.Api
         {
             return _featureToggleData.DeleteFeatureToggles(id, host);
         }
+
+        [HttpPost]
+        public bool Post(FeatureToggleModel model)
+        {
+            return _featureToggleData.AddFeatureToggles(model);
+        }
+
+        [HttpPut]
+        public bool Put(FeatureToggleModel model)
+        {
+            return _featureToggleData.FlipFeatureToggles(model);
+        }
     }
 }

@@ -8,8 +8,8 @@ namespace FeatureToggle.Web.Data
 {
     public interface IFeatureToggleData
     {
-        List<FeatureToggleModel> GetAllFeatureToggles();
+        List<FeatureToggleModel> GetFeatureToggles(string host);
 
-        List<FeatureToggleModel> GetMyFeatureToggles(string host);
+        bool DeleteFeatureToggles(int id, string host);
     }
 }

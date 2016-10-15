@@ -1,5 +1,5 @@
 <app-search (searchChanged)="searchChanged($event)"></app-search>
-<app-feature-toggles [featureToggles]="myFeatureToggles" title="My Feature Toggles" [(searchedFeatureToggle)]="inputSearch">
+<app-feature-toggles host="ARDALAN\Ardalan" title="My Feature Toggles" [(searchedFeatureToggle)]="inputSearch">
 </app-feature-toggles>
-<app-feature-toggles [featureToggles]="allFeatureToggles" title="All Feature Toggles" [(searchedFeatureToggle)]="inputSearch">
+<app-feature-toggles host="" title="All Feature Toggles" [(searchedFeatureToggle)]="inputSearch">
 </app-feature-toggles>

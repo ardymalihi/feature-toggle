@@ -18,16 +18,15 @@ namespace FeatureToggle.Web.Api
         }
 
         [HttpGet]
-        public List<FeatureToggleModel> GetAllFeatureToggles()
+        public List<FeatureToggleModel> Get(string host)
         {
-            return _featureToggleData.GetAllFeatureToggles();
+            return _featureToggleData.GetFeatureToggles(host);
         }
 
-        [HttpGet]
-        [Route("host")]
-        public List<FeatureToggleModel> GetMyFeatureToggles()
+        [HttpDelete]
+        public bool Delete(int id, string host)
         {
-            return _featureToggleData.GetMyFeatureToggles(User.Identity.Name);
+            return _featureToggleData.DeleteFeatureToggles(id, host);
         }
     }
 }

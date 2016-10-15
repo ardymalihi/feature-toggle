@@ -63,14 +63,25 @@ namespace FeatureToggle.Web.Data
                 }
             };
 
-        public List<FeatureToggleModel> GetAllFeatureToggles()
+        public List<FeatureToggleModel> GetFeatureToggles(string host)
         {
-            return all;
+            return string.IsNullOrWhiteSpace(host) ? all : my;
         }
 
-        public List<FeatureToggleModel> GetMyFeatureToggles(string host)
+        public bool DeleteFeatureToggles(int id, string host)
         {
-            return my;
+            if (string.IsNullOrEmpty(host))
+            {
+                var featureToggle = all.FirstOrDefault(o => o.Id == id);
+                all.Remove(featureToggle);
+            }
+            else
+            {
+                var featureToggle = my.FirstOrDefault(o => o.Id == id);
+                my.Remove(featureToggle);
+            }
+
+            return true;
         }
     }
 }

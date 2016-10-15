@@ -9,7 +9,7 @@
             </div>
             <div class="col-md-6" *ngFor="let featureToggle of (featureToggles | search:searchedFeatureToggle:true)">
                 <h4>
-                    <button class="glyphicon glyphicon-remove btn btn-sm btn-danger"></button>
+                    <button class="glyphicon glyphicon-remove btn btn-sm btn-danger" (click)="deleteFeatureToggle(featureToggle)"></button>
                     <span [title]="featureToggle.description">{{featureToggle.name}}</span>
                 </h4>
                 <ui-switch size="large" (change)="onChange(featureToggle)" [(ngModel)]="featureToggle.enabled"></ui-switch>

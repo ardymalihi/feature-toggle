@@ -10,6 +10,7 @@ import { routing, appRoutingProviders } from './app.routing';
 import { FeatureToggleService } from './shared/feature-toggle.service';
 import { EmitterService } from './shared/emitter.service';
 import { FeatureTogglesComponent } from './home/feature-toggles.component';
+import { UserComponent } from './user/user.component';
 import { SearchComponent } from './home/search.component';
 import { SearchPipe } from './shared/feature-toggle.pipe';
 
@@ -36,6 +37,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
         AboutComponent,
         FeatureTogglesComponent,
         SearchComponent,
+        UserComponent,
         SearchPipe
     ],
     bootstrap: [AppComponent]

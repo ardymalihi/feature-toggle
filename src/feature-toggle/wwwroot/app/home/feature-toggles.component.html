@@ -1,7 +1,7 @@
 ﻿<div *ngIf="featureToggles && featureToggles.length > 0">
-    <h1 title="">
+    <h2 title="">
         {{title}}
-    </h1>
+    </h2>
     <div class="well" title="">
         <div class="row">
             <div class="col-md-6" *ngIf="(featureToggles | search:searchedFeatureToggle:true).length === 0">
@@ -9,7 +9,8 @@
             </div>
             <div class="col-md-6" *ngFor="let featureToggle of (featureToggles | search:searchedFeatureToggle:true)">
                 <h4>
-                    <button class="glyphicon glyphicon-remove btn btn-sm btn-danger" (click)="deleteFeatureToggle(featureToggle)"></button>
+                    <button title="Delete Feature Toggle" class="glyphicon glyphicon-remove btn btn-sm btn-danger" (click)="deleteFeatureToggle(featureToggle)"></button>
+                    <button title="Add to my Feature Toggle list" *ngIf="!featureToggle.host" class="glyphicon glyphicon-user btn btn-sm btn-info" (click)="addToUserFeatureToggle(featureToggle)"></button>
                     <span [title]="featureToggle.description">{{featureToggle.name}}</span>
                 </h4>
                 <ui-switch size="large" (change)="onChange(featureToggle)" [checked]="featureToggle.enabled"></ui-switch>

@@ -28,4 +28,9 @@ export class FeatureToggleService {
             .map(response => <boolean>response.json());
     }
 
+    getCurrentUser() {
+        return this.http.get('api/users/current')
+            .map(response => <any>response.json());
+    }
+
 }

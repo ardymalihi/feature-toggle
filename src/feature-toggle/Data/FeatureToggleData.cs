@@ -20,14 +20,14 @@ namespace FeatureToggle.Web.Data
                     Id =2,
                     Name= "Feature 2",
                     Description = "This is a feature 2",
-                    Enabled = true,
+                    Enabled = false,
                     Host = ""
                 },
                 new FeatureToggleModel {
                     Id =3,
                     Name= "Feature 3",
                     Description = "This is a feature 3",
-                    Enabled = true,
+                    Enabled = false,
                     Host = ""
                 },
                 new FeatureToggleModel {
@@ -44,7 +44,7 @@ namespace FeatureToggle.Web.Data
                     Id =5,
                     Name= "Feature 1",
                     Description = "This is a feature 1",
-                    Enabled = true,
+                    Enabled = false,
                     Host = "ARDALAN\\Ardalan"
                 },
                 new FeatureToggleModel {
@@ -86,12 +86,32 @@ namespace FeatureToggle.Web.Data
 
         public bool AddFeatureToggles(FeatureToggleModel model)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(model.Host))
+            {
+                all.Add(model);
+            }
+            else
+            {
+                my.Add(model);
+            }
+
+            return true;
         }
 
         public bool FlipFeatureToggles(FeatureToggleModel model)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(model.Host))
+            {
+                var featureToggle = all.FirstOrDefault(o => o.Id == model.Id);
+                featureToggle.Enabled = !featureToggle.Enabled;
+            }
+            else
+            {
+                var featureToggle = my.FirstOrDefault(o => o.Id == model.Id);
+                featureToggle.Enabled = !featureToggle.Enabled;
+            }
+
+            return true;
         }
     }
 }

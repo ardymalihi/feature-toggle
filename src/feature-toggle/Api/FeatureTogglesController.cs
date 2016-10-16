@@ -30,13 +30,13 @@ namespace FeatureToggle.Web.Api
         }
 
         [HttpPost]
-        public bool Post(FeatureToggleModel model)
+        public bool Post([FromBody]FeatureToggleModel model)
         {
             return _featureToggleData.AddFeatureToggles(model);
         }
 
         [HttpPut]
-        public bool Put(FeatureToggleModel model)
+        public bool Put([FromBody]FeatureToggleModel model)
         {
             return _featureToggleData.FlipFeatureToggles(model);
         }

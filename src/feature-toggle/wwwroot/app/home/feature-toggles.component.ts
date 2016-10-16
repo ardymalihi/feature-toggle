@@ -34,6 +34,7 @@ export class FeatureTogglesComponent implements OnInit {
 
 
     onChange(featureToggle: IFeatureToggle) {
+        featureToggle.enabled = !featureToggle.enabled;
         this.featureToggleService
             .flipFeatureToggle(featureToggle)
             .subscribe(updated => {

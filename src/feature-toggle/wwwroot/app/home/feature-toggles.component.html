@@ -10,7 +10,7 @@
             <div class="col-md-6" *ngFor="let featureToggle of (featureToggles | search:searchedFeatureToggle:true)">
                 <h4>
                     <button title="Delete Feature Toggle" class="glyphicon glyphicon-remove btn btn-sm btn-danger" (click)="deleteFeatureToggle(featureToggle)"></button>
-                    <button title="Add to my Feature Toggle list" *ngIf="!featureToggle.host" class="glyphicon glyphicon-user btn btn-sm btn-info" (click)="addToUserFeatureToggle(featureToggle)"></button>
+                    <button title="Add to my Feature Toggle list" *ngIf="!featureToggle.host" class="glyphicon glyphicon-user btn btn-sm btn-info" (click)="cloneFeatureToggle(featureToggle)"></button>
                     <span [title]="featureToggle.description">{{featureToggle.name}}</span>
                 </h4>
                 <ui-switch size="large" (change)="onChange(featureToggle)" [checked]="featureToggle.enabled"></ui-switch>

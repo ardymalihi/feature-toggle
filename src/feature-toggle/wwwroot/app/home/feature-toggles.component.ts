@@ -28,6 +28,12 @@ export class FeatureTogglesComponent implements OnInit {
             this.searchedFeatureToggle = value;
         });
 
+        this.emitterService.get("featureToggleCloned").subscribe(value => {
+            if (value.host === this.host) {
+                this.featureToggles.push(value);
+            }
+        });
+
         this.featureToggleService.getFeatureToggles(this.host)
             .subscribe(featureToggles => this.featureToggles = featureToggles);
     }
@@ -58,5 +64,32 @@ export class FeatureTogglesComponent implements OnInit {
                 this.toastr.success(featureToggle.name + ' successfully removed');
             }
         );
+    }
+
+    cloneFeatureToggle(featureToggle: IFeatureToggle) {
+        let clonedFeatureToggle: IFeatureToggle = Object.assign({}, featureToggle);
+        clonedFeatureToggle.host = this.featureToggleService.currentUser;
+        this.featureToggleService
+            .cloneFeatureToggle(clonedFeatureToggle)
+            .subscribe(id => {
+                if (id > 0) {
+                    clonedFeatureToggle.id = id;
+                    this.emitterService.get("featureToggleCloned").emit(clonedFeatureToggle);
+                    this.toastr.success(clonedFeatureToggle.name + ' successfully added to your list');
+                }
+            }
+        );
+    }
+
+    private clone(): any {
+        var cloneObj = new (<any>this.constructor());
+        for (var attribut in this) {
+            if (typeof this[attribut] === "object") {
+                cloneObj[attribut] = this.clone();
+            } else {
+                cloneObj[attribut] = this[attribut];
+            }
+        }
+        return cloneObj;
     }
 }

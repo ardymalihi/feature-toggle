@@ -84,18 +84,35 @@ namespace FeatureToggle.Web.Data
             return true;
         }
 
-        public bool AddFeatureToggles(FeatureToggleModel model)
+        public FeatureToggleModel AddFeatureToggles(FeatureToggleModel model)
         {
             if (string.IsNullOrEmpty(model.Host))
             {
-                all.Add(model);
+                if (all.FirstOrDefault(o => o.Name.ToLower() == model.Name.ToLower() && o.Host.ToLower() == model.Host.ToLower()) == null)
+                {
+                    all.Add(model);
+                    model.Id = all.Max(o => o.Id) + 1;
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
-                my.Add(model);
+                if (my.FirstOrDefault(o => o.Name.ToLower() == model.Name.ToLower() && o.Host.ToLower() == model.Host.ToLower()) == null)
+                {
+                    my.Add(model);
+                    model.Id = my.Max(o => o.Id) + 1;
+                }
+                else
+                {
+                    return null;
+                }
             }
 
-            return true;
+
+            return model;
         }
 
         public bool FlipFeatureToggles(FeatureToggleModel model)

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FeatureToggle.Web.Models;
 using FeatureToggle.Web.Data;
+using System;
+using System.Net.Http;
+using System.Net;
 
 namespace FeatureToggle.Web.Api
 {
@@ -30,10 +33,18 @@ namespace FeatureToggle.Web.Api
         }
 
         [HttpPost]
-        public bool Post([FromBody]FeatureToggleModel model)
+        public int Post([FromBody]FeatureToggleModel model)
         {
-            return _featureToggleData.AddFeatureToggles(model);
-        }
+            var result = _featureToggleData.AddFeatureToggles(model);
+            if (result != null)
+            {
+                return result.Id;
+            }
+            else
+            {
+                return 0;
+            }
+         }
 
         [HttpPut]
         public bool Put([FromBody]FeatureToggleModel model)

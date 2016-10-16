@@ -10,7 +10,7 @@ namespace FeatureToggle.Web.Data
     {
         List<FeatureToggleModel> GetFeatureToggles(string host);
         bool DeleteFeatureToggles(int id, string host);
-        bool AddFeatureToggles(FeatureToggleModel model);
+        FeatureToggleModel AddFeatureToggles(FeatureToggleModel model);
         bool FlipFeatureToggles(FeatureToggleModel model);
     }
 }

@@ -1,0 +1,19 @@
+﻿<div class="well">
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Add new Feature Toggle</h2>
+    </div>
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Name</label>
+            <input required type="text" class="form-control" [(ngModel)]="featureToggle.name" placeholder="Name" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Description</label>
+            <input type="text" class="form-control" [(ngModel)]="featureToggle.description" placeholder="Description" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="checkbox">
+            <ui-switch size="large" [(ngModel)]="featureToggle.enabled" [ngModelOptions]="{standalone: true}"></ui-switch>
+        </div>
+        <button type="submit" (click)="addFeatureToggle()" class="btn btn-success">Submit</button>
+    </form>
+</div>

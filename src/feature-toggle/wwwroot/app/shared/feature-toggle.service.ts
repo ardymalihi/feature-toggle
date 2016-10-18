@@ -27,7 +27,7 @@ export class FeatureToggleService {
 
     addFeatureToggle(featureToggle: IFeatureToggle) {
         return this.http.post('api/featuretoggles', featureToggle)
-            .map(response => <IFeatureToggle>response.json());
+            .map(response => <number>response.json());
     }
 
     cloneFeatureToggle(featureToggle: IFeatureToggle) {

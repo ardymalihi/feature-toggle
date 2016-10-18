@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent }  from './app.component';
 import { HomeComponent } from './home/home.component';
+import { AddComponent } from './add/add.component';
 import { AboutComponent } from './about/about.component';
 import { routing, appRoutingProviders } from './app.routing';
 import { FeatureToggleService } from './shared/feature-toggle.service';
@@ -34,6 +35,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
     declarations: [
         AppComponent,
         HomeComponent,
+        AddComponent,
         AboutComponent,
         FeatureTogglesComponent,
         SearchComponent,

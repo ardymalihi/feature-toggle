@@ -3,132 +3,90 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FeatureToggle.Web.Models;
+using Microsoft.Extensions.Configuration;
+using Dapper;
+using System.Data.SqlClient;
 
 namespace FeatureToggle.Web.Data
 {
     public class FeatureToggleData : IFeatureToggleData
     {
-        private List<FeatureToggleModel> all = new List<FeatureToggleModel> {
-                new FeatureToggleModel {
-                    Id =1,
-                    Name= "Feature 1",
-                    Description = "This is a feature 1",
-                    Enabled = true,
-                    Host = ""
-                },
-                new FeatureToggleModel {
-                    Id =2,
-                    Name= "Feature 2",
-                    Description = "This is a feature 2",
-                    Enabled = false,
-                    Host = ""
-                },
-                new FeatureToggleModel {
-                    Id =3,
-                    Name= "Feature 3",
-                    Description = "This is a feature 3",
-                    Enabled = false,
-                    Host = ""
-                },
-                new FeatureToggleModel {
-                    Id =4,
-                    Name= "Feature 4",
-                    Description = "This is a feature 4",
-                    Enabled = true,
-                    Host = ""
-                }
-            };
+        private IConfiguration _configuration;
 
-        private List<FeatureToggleModel> my = new List<FeatureToggleModel> {
-                new FeatureToggleModel {
-                    Id =5,
-                    Name= "Feature 1",
-                    Description = "This is a feature 1",
-                    Enabled = false,
-                    Host = "ARDALAN\\Ardalan"
-                },
-                new FeatureToggleModel {
-                    Id =6,
-                    Name= "Feature 2",
-                    Description = "This is a feature 2",
-                    Enabled = true,
-                    Host = "ARDALAN\\Ardalan"
-                },
-                new FeatureToggleModel {
-                    Id =7,
-                    Name= "Feature 4",
-                    Description = "This is a feature 4",
-                    Enabled = true,
-                    Host = "ARDALAN\\Ardalan"
-                }
-            };
+        public string ConnectionString
+        {
+            get
+            {
+                return _configuration.GetConnectionString("DefaultConnection");
+            }
+        }
 
+        public FeatureToggleData(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        
         public List<FeatureToggleModel> GetFeatureToggles(string host)
         {
-            return string.IsNullOrWhiteSpace(host) ? all : my;
+            string sql = @"select Id, Name, Description, Enabled, Host from featuretoggle where isnull(Host,'') = @Host";
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var query = connection.Query<FeatureToggleModel>(sql, new { Host = host??"" });
+                return query.ToList();
+            }
         }
 
         public bool DeleteFeatureToggles(int id, string host)
         {
-            if (string.IsNullOrEmpty(host))
-            {
-                var featureToggle = all.FirstOrDefault(o => o.Id == id);
-                all.Remove(featureToggle);
-            }
-            else
-            {
-                var featureToggle = my.FirstOrDefault(o => o.Id == id);
-                my.Remove(featureToggle);
-            }
+            var sql = @"delete from TaxDocuments where Id = @Id and Host = @Host";
 
-            return true;
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Execute(sql, new
+                {
+                    Id = id,
+                    Host = host
+                });
+
+                return true;
+            }
         }
 
         public FeatureToggleModel AddFeatureToggles(FeatureToggleModel model)
         {
-            if (string.IsNullOrEmpty(model.Host))
-            {
-                if (all.FirstOrDefault(o => o.Name.ToLower() == model.Name.ToLower() && o.Host.ToLower() == model.Host.ToLower()) == null)
-                {
-                    all.Add(model);
-                    model.Id = all.Max(o => o.Id) + 1;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                if (my.FirstOrDefault(o => o.Name.ToLower() == model.Name.ToLower() && o.Host.ToLower() == model.Host.ToLower()) == null)
-                {
-                    my.Add(model);
-                    model.Id = my.Max(o => o.Id) + 1;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            var sql = @"
+                    INSERT INTO FeatureToggle 
+                        (Name, Description, Enabled, Host) 
+                    VALUES 
+                        (@Name, @Description, @Enabled, @Host);
+                    SELECT CAST(SCOPE_IDENTITY() as int)";
 
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var result = connection.Query<int>(sql, model);
+
+                model.Id = result.Single();
+            }
 
             return model;
         }
 
         public bool FlipFeatureToggles(FeatureToggleModel model)
         {
-            if (string.IsNullOrEmpty(model.Host))
-            {
-                var featureToggle = all.FirstOrDefault(o => o.Id == model.Id);
-                featureToggle.Enabled = !featureToggle.Enabled;
-            }
-            else
-            {
-                var featureToggle = my.FirstOrDefault(o => o.Id == model.Id);
-                featureToggle.Enabled = !featureToggle.Enabled;
-            }
+            var sql = @"update FeatureToggle set Enabled = @Enabled where Id = @Id";
 
-            return true;
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Execute(sql, new
+                {
+                    Id = model.Id,
+                    Enabled = model.Enabled
+                });
+
+                return true;
+            }
         }
     }
 }

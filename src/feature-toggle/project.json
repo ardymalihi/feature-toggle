@@ -16,7 +16,8 @@
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
     "Microsoft.AspNetCore.SpaServices": "1.0.0-beta-000007",
     "Swashbuckle": "6.0.0-beta901",
-    "System.Runtime.Extensions": "4.1.0"
+    "System.Runtime.Extensions": "4.1.0",
+    "Dapper": "1.50.2"
   },
 
   "tools": {

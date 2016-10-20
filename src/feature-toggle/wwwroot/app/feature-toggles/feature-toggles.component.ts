@@ -15,6 +15,7 @@ export class FeatureTogglesComponent implements OnInit {
     @Input() title: string;
     @Input() searchedFeatureToggle: string;
     featureToggles: IFeatureToggle[];
+    user: IUser = { host: "", isAdmin: false };
 
     constructor(
         private emitterService: EmitterService,
@@ -32,6 +33,10 @@ export class FeatureTogglesComponent implements OnInit {
             if (value.host === this.host) {
                 this.featureToggles.unshift(value);
             }
+        });
+
+        this.emitterService.get("userLoaded").subscribe(user => {
+            this.user = user;
         });
 
         this.featureToggleService.getFeatureToggles(this.host)
@@ -56,14 +61,18 @@ export class FeatureTogglesComponent implements OnInit {
 
 
     deleteFeatureToggle(featureToggle: IFeatureToggle) {
-
-        this.featureToggleService
-            .deleteFeatureToggle(featureToggle)
-            .subscribe(removed => {
-                this.featureToggles = this.featureToggles.filter(f => f.id !== featureToggle.id);
-                this.toastr.success(featureToggle.name + ' successfully removed');
-            }
-        );
+        if (this.featureToggleService.currentUser.isAdmin) {
+            this.featureToggleService
+                .deleteFeatureToggle(featureToggle)
+                .subscribe(removed => {
+                    this.featureToggles = this.featureToggles.filter(f => f.id !== featureToggle.id);
+                    this.toastr.success(featureToggle.name + ' successfully removed');
+                }
+                );
+        }
+        else {
+            this.toastr.error('Access denied');
+        }
     }
 
     cloneFeatureToggle(featureToggle: IFeatureToggle) {

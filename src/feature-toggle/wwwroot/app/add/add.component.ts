@@ -13,7 +13,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 export class AddComponent implements OnInit {
 
     featureToggle: IFeatureToggle;
-
+    user: IUser = { host: "", isAdmin: false };
 
     constructor(
         private router: Router,
@@ -25,6 +25,10 @@ export class AddComponent implements OnInit {
     ngOnInit() {
 
         this.featureToggle = { id: 0, name: "", description: "", enabled: false, host: "" };
+
+        this.emitterService.get("userLoaded").subscribe(user => {
+            this.user = user;
+        });
         
     }
 

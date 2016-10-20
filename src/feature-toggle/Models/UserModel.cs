@@ -8,5 +8,8 @@ namespace FeatureToggle.Web.Models
     public class UserModel
     {
         public string Host { get; set; }
+
+        public bool IsAdmin { get; set; }
+
     }
 }

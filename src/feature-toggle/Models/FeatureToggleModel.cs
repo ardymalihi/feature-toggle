@@ -16,5 +16,10 @@ namespace FeatureToggle.Web.Models
         public bool Enabled { get; set; }
 
         public string Host { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public DateTime UpdatedDate { get; set; }
+
     }
 }

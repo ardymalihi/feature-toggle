@@ -1,4 +1,5 @@
 using FeatureToggle.Web.Data;
+using FeatureToggle.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.Swagger.Model;
 using System.IO;
+
 
 namespace FeatureToggle.Web
 {
@@ -44,8 +46,11 @@ namespace FeatureToggle.Web
             // Add functionality to inject IOptions<T>
             services.AddOptions();
 
+            services.Configure<AppConfig>(options => Configuration.GetSection("AppConfig"));
+
             // *If* you need access to generic IConfiguration this is **required**
             services.AddSingleton<IConfiguration>(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

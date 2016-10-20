@@ -10,9 +10,9 @@ import { AboutComponent } from './about/about.component';
 import { routing, appRoutingProviders } from './app.routing';
 import { FeatureToggleService } from './shared/feature-toggle.service';
 import { EmitterService } from './shared/emitter.service';
-import { FeatureTogglesComponent } from './home/feature-toggles.component';
+import { FeatureTogglesComponent } from './feature-toggles/feature-toggles.component';
 import { UserComponent } from './user/user.component';
-import { SearchComponent } from './home/search.component';
+import { SearchComponent } from './search/search.component';
 import { SearchPipe } from './shared/feature-toggle.pipe';
 
 import { UiSwitchModule } from 'angular2-ui-switch'

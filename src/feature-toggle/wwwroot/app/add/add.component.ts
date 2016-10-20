@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { FeatureToggleService } from '../shared/feature-toggle.service';
 import { EmitterService } from '../shared/emitter.service';
-import { IFeatureToggle } from '../shared/feature-toggle.interface'
+import { IFeatureToggle, IUser } from '../shared/feature-toggle.interface'
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -13,6 +13,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 export class AddComponent implements OnInit {
 
     featureToggle: IFeatureToggle;
+
 
     constructor(
         private router: Router,
@@ -24,6 +25,7 @@ export class AddComponent implements OnInit {
     ngOnInit() {
 
         this.featureToggle = { id: 0, name: "", description: "", enabled: false, host: "" };
+        
     }
 
     addFeatureToggle() {

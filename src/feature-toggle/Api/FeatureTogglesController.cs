@@ -6,6 +6,7 @@ using FeatureToggle.Web.Data;
 using System;
 using System.Net.Http;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace FeatureToggle.Web.Api
 {
@@ -13,10 +14,20 @@ namespace FeatureToggle.Web.Api
     [Produces("application/json")]
     public class FeatureTogglesController : Controller
     {
+        private IConfiguration _configuration;
         private IFeatureToggleData _featureToggleData;
 
-        public FeatureTogglesController(IFeatureToggleData featureToggleData)
+        private string _adminRole
         {
+            get
+            {
+                return _configuration.GetSection("AppConfig")["AdminRole"];
+            }
+        }
+
+        public FeatureTogglesController(IConfiguration configuration, IFeatureToggleData featureToggleData)
+        {
+            _configuration = configuration;
             _featureToggleData = featureToggleData;
         }
 

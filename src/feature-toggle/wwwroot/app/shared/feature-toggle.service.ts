@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { IFeatureToggle } from './feature-toggle.interface';
+import { IFeatureToggle, IUser } from './feature-toggle.interface';
 import { EmitterService } from './emitter.service';
 
 @Injectable()
 export class FeatureToggleService {
 
-    public currentUser: string = "";
+    public currentUser: IUser;
 
     constructor(private http: Http, private emitterService: EmitterService) {
         this.emitterService.get("userLoaded").subscribe(user => {
@@ -31,7 +31,7 @@ export class FeatureToggleService {
     }
 
     cloneFeatureToggle(featureToggle: IFeatureToggle) {
-        featureToggle.host = this.currentUser;
+        featureToggle.host = this.currentUser.host;
         return this.http.post('api/featuretoggles', featureToggle)
             .map(response => <number>response.json());
     }
@@ -43,7 +43,7 @@ export class FeatureToggleService {
 
     getCurrentUser() {
         return this.http.get('api/users/current')
-            .map(response => <any>response.json());
+            .map(response => <IUser>response.json());
     }
 
 }

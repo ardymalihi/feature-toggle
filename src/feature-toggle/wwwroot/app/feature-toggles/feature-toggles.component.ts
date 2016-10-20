@@ -2,7 +2,7 @@
 
 import { FeatureToggleService } from '../shared/feature-toggle.service';
 import { EmitterService } from '../shared/emitter.service';
-import { IFeatureToggle } from '../shared/feature-toggle.interface'
+import { IFeatureToggle, IUser } from '../shared/feature-toggle.interface'
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -30,7 +30,7 @@ export class FeatureTogglesComponent implements OnInit {
 
         this.emitterService.get("featureToggleCloned").subscribe(value => {
             if (value.host === this.host) {
-                this.featureToggles.push(value);
+                this.featureToggles.unshift(value);
             }
         });
 
@@ -68,7 +68,7 @@ export class FeatureTogglesComponent implements OnInit {
 
     cloneFeatureToggle(featureToggle: IFeatureToggle) {
         let clonedFeatureToggle: IFeatureToggle = Object.assign({}, featureToggle);
-        clonedFeatureToggle.host = this.featureToggleService.currentUser;
+        clonedFeatureToggle.host = this.featureToggleService.currentUser.host;
         this.featureToggleService
             .cloneFeatureToggle(clonedFeatureToggle)
             .subscribe(id => {

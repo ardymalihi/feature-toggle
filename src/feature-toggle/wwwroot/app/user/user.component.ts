@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
 import { FeatureToggleService } from '../shared/feature-toggle.service';
+import { IUser } from '../shared/feature-toggle.interface';
 import { EmitterService } from '../shared/emitter.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { EmitterService } from '../shared/emitter.service';
     templateUrl: './user.component.html'
 })
 export class UserComponent implements OnInit {
-    host: string;
+    user: IUser = { host: "", isAdmin: false };
 
     constructor(private featureToggleService: FeatureToggleService, private emitterService: EmitterService) { }
 
@@ -17,8 +18,8 @@ export class UserComponent implements OnInit {
 
         this.featureToggleService.getCurrentUser()
             .subscribe(user => {
-                this.host = user.host;
-                this.emitterService.get("userLoaded").emit(this.host);
+                this.user = user;
+                this.emitterService.get("userLoaded").emit(this.user);
             });
 
         

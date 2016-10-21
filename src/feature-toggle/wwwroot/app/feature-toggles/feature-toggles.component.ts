@@ -3,6 +3,7 @@
 import { FeatureToggleService } from '../shared/feature-toggle.service';
 import { EmitterService } from '../shared/emitter.service';
 import { IFeatureToggle, IUser } from '../shared/feature-toggle.interface'
+import { ServerConfigLoader } from '../shared/server-config.loader'
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -15,11 +16,15 @@ export class FeatureTogglesComponent implements OnInit {
     @Input() title: string;
     @Input() searchedFeatureToggle: string;
     featureToggles: IFeatureToggle[];
-    user: IUser = { host: "", isAdmin: false };
+
+    get user(): IUser {
+        return this.serverConfogLoader.serverConfig.user;
+    }
 
     constructor(
         private emitterService: EmitterService,
         private featureToggleService: FeatureToggleService,
+        private serverConfogLoader: ServerConfigLoader,
         private toastr: ToastsManager) {
     }
 
@@ -33,10 +38,6 @@ export class FeatureTogglesComponent implements OnInit {
             if (value.host === this.host) {
                 this.featureToggles.unshift(value);
             }
-        });
-
-        this.emitterService.get("userLoaded").subscribe(user => {
-            this.user = user;
         });
 
         this.featureToggleService.getFeatureToggles(this.host)

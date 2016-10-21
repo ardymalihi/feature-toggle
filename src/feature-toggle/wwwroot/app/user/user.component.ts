@@ -2,6 +2,7 @@
 
 import { FeatureToggleService } from '../shared/feature-toggle.service';
 import { IUser } from '../shared/feature-toggle.interface';
+import { ServerConfigLoader } from '../shared/server-config.loader'
 import { EmitterService } from '../shared/emitter.service';
 
 @Component({
@@ -10,18 +11,16 @@ import { EmitterService } from '../shared/emitter.service';
     templateUrl: './user.component.html'
 })
 export class UserComponent implements OnInit {
-    user: IUser = { host: "", isAdmin: false };
 
-    constructor(private featureToggleService: FeatureToggleService, private emitterService: EmitterService) { }
+    get user(): IUser {
+        return this.serverConfogLoader.serverConfig.user;
+    }
+
+    constructor(
+        private featureToggleService: FeatureToggleService,
+        private serverConfogLoader: ServerConfigLoader,
+        private emitterService: EmitterService) { }
 
     ngOnInit() {
-
-        this.featureToggleService.getCurrentUser()
-            .subscribe(user => {
-                this.user = user;
-                this.emitterService.get("userLoaded").emit(this.user);
-            });
-
-        
     }
 }

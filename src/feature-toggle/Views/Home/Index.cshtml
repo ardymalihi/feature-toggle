@@ -1,3 +1,8 @@
+@model FeatureToggle.Web.Models.ServerConfig
+@{ 
+    var obj = Newtonsoft.Json.JsonConvert.SerializeObject(Model, 
+        new Newtonsoft.Json.JsonSerializerSettings { ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver() });
+}
 <!doctype html>
 <html>
 <head>
@@ -19,6 +24,9 @@
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules/ng2-toastr/bundles/ng2-toastr.min.js"></script>
+    <script>
+        var serverConfig = JSON.parse('@Html.Raw(obj)');
+    </script>
 </head>
 <body>
     <app-root>

@@ -10,3 +10,7 @@ export interface IUser {
     host: string;
     isAdmin: boolean;
 }
+
+export interface IServerConfig {
+    user: IUser;
+}

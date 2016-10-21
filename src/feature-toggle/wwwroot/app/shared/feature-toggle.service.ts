@@ -10,9 +10,6 @@ export class FeatureToggleService {
     public currentUser: IUser;
 
     constructor(private http: Http, private emitterService: EmitterService) {
-        this.emitterService.get("userLoaded").subscribe(user => {
-            this.currentUser = user;
-        });
     }
 
     getFeatureToggles(host: string) {
@@ -40,10 +37,4 @@ export class FeatureToggleService {
         return this.http.put('api/featuretoggles', featureToggle)
             .map(response => <boolean>response.json());
     }
-
-    getCurrentUser() {
-        return this.http.get('api/users/current')
-            .map(response => <IUser>response.json());
-    }
-
 }

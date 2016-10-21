@@ -14,8 +14,8 @@ namespace FeatureToggle.Web.Api
     [Produces("application/json")]
     public class FeatureTogglesController : Controller
     {
-        private IConfiguration _configuration;
         private IFeatureToggleData _featureToggleData;
+        private IConfiguration _configuration;
 
         private string _adminRole
         {
@@ -40,27 +40,44 @@ namespace FeatureToggle.Web.Api
         [HttpDelete]
         public bool Delete(int id, string host)
         {
-            return _featureToggleData.DeleteFeatureToggles(id, host);
+            if (User.IsInRole(_adminRole))
+            {
+                return _featureToggleData.DeleteFeatureToggles(id, host);
+            }
+
+            return false;
         }
 
         [HttpPost]
         public int Post([FromBody]FeatureToggleModel model)
         {
-            var result = _featureToggleData.AddFeatureToggles(model);
-            if (result != null)
+            if (User.IsInRole(_adminRole))
             {
-                return result.Id;
+                var result = _featureToggleData.AddFeatureToggles(model);
+                if (result != null)
+                {
+                    return result.Id;
+                }
+                else
+                {
+                    return 0;
+                }
             }
-            else
-            {
-                return 0;
-            }
+
+            return 0;
          }
 
         [HttpPut]
         public bool Put([FromBody]FeatureToggleModel model)
         {
-            return _featureToggleData.FlipFeatureToggles(model);
+            if (User.IsInRole(_adminRole))
+            {
+                return _featureToggleData.FlipFeatureToggles(model);
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

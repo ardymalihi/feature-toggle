@@ -44,14 +44,16 @@ namespace FeatureToggle.Web.Data
         public List<FeatureToggleModel> GetFeatureToggles(string host)
         {
             string sql = $@"select 
-                            {_appConfig.ColumnId}, 
-                            {_appConfig.ColumnName}, 
-                            {_appConfig.ColumnDescription}, 
-                            {_appConfig.ColumnEnabled}, {_appConfig.ColumnHost}, 
-                            {_appConfig.ColumnCreatedDate}, {_appConfig.ColumnUpdatedDate} 
-                           from {_appConfig.TableName} 
-                           where isnull({_appConfig.ColumnHost},'') = @Host
-                           order by {_appConfig.ColumnCreatedDate} desc";
+                           {_appConfig.ColumnId} as Id, 
+                           {_appConfig.ColumnName} as Name, 
+                           {_appConfig.ColumnDescription} as Description, 
+                           {_appConfig.ColumnEnabled} as Enabled, 
+                           {_appConfig.ColumnHost} as Host, 
+                           {_appConfig.ColumnCreatedDate} as CreatedDate, 
+                           {_appConfig.ColumnUpdatedDate} as UpdatedDate 
+                          from {_appConfig.TableName} 
+                          where isnull({_appConfig.ColumnHost},'') = @Host
+                          order by {_appConfig.ColumnCreatedDate} desc";
 
             using (var connection = new SqlConnection(ConnectionString))
             {

@@ -12,5 +12,6 @@ namespace FeatureToggle.Web.Data
         bool DeleteFeatureToggles(int id, string host);
         FeatureToggleModel AddFeatureToggles(FeatureToggleModel model);
         bool FlipFeatureToggles(FeatureToggleModel model);
+        bool HasFeature(string name, string host);
     }
 }

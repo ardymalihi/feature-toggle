@@ -79,5 +79,12 @@ namespace FeatureToggle.Web.Api
                 return false;
             }
         }
+
+        [HttpGet]
+        [Route("{name}")]
+        public bool Get(string name, [FromQuery]string host = "")
+        {
+            return _featureToggleData.HasFeature(name, host);
+        }
     }
 }

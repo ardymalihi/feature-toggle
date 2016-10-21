@@ -136,5 +136,16 @@ namespace FeatureToggle.Web.Data
                 return query.FirstOrDefault() > 0;
             }
         }
+
+        public bool HasFeature(string name, string host)
+        {
+            string sql = $@"select {_appConfig.ColumnEnabled} as Enabled from {_appConfig.TableName} where isnull({_appConfig.ColumnName},'') = @Name and isnull({_appConfig.ColumnHost},'') = @Host";
+
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var query = connection.Query<bool>(sql, new { Name = name ?? "", Host = host ?? "" });
+                return query.FirstOrDefault();
+            }
+        }
     }
 }
